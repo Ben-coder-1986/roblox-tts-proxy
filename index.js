@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 3000;  // Render will detect this dynamically
+const PORT = process.env.PORT || 10000;  // Change to match Render's default
 
 // Middleware
 app.use(express.json());
@@ -55,6 +55,5 @@ app.post("/tts", async (req, res) => {
     }
 });
 
-// Start Server (Bind to 0.0.0.0 so Render can detect it)
+// ** FIX: Bind to 0.0.0.0 so Render can detect the open port **
 app.listen(PORT, "0.0.0.0", () => console.log(`✅ Proxy running on port ${PORT}`));
-
