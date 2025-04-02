@@ -12,8 +12,8 @@ app.use(express.json());
 app.use(cors());
 
 // ElevenLabs API Config
-const ELEVENLABS_API_KEY = process.env.sk_1b88e859b7a3a41a3d79c50b95b916dbb7b0d84904aab05b;
-const ELEVENLABS_VOICE_ID = process.env.RqsQjwl6phQuWw8d40AT;
+const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY;
+const ELEVENLABS_VOICE_ID = process.env.ELEVENLABS_VOICE_ID;
 const ELEVENLABS_API_URL = `https://api.elevenlabs.io/v1/text-to-speech/${ELEVENLABS_VOICE_ID}`;
 
 // Root Route (Health Check)
@@ -50,8 +50,8 @@ app.post("/tts", async (req, res) => {
         res.setHeader("Content-Type", "audio/mpeg");
         res.send(Buffer.from(audioBuffer));
     } catch (error) {
-        console.error("❌ TTS Proxy Error:", error);
-        res.status(500).json({ error: "Internal Server Error" });
+        console.error("❌ TTS Proxy Error:", error.message);
+        res.status(500).json({ error: error.message });
     }
 });
 
