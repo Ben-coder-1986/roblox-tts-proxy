@@ -4,7 +4,6 @@ const app = express();
 
 app.use(express.json());
 
-// Replace with your actual ElevenLabs API Key and Voice ID
 const ELEVENLABS_API_KEY = "sk_1b88e859b7a3a41a3d79c50b95b916dbb7b0d84904aab05b";
 const ELEVENLABS_VOICE_ID = "RqsQjwl6phQuWw8d40AT";
 
@@ -34,6 +33,6 @@ app.post("/tts", async (req, res) => {
     }
 });
 
-// Start Server
-const PORT = process.env.PORT || 10000;
+// ✅ Use the Render-assigned port
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
