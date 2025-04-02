@@ -6,15 +6,15 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const ELEVENLABS_API_KEY = "sk_1b88e859b7a3a41a3d79c50b95b916dbb7b0d84904aab05b";  
-const ELEVENLABS_VOICE_ID = "RqsQjwl6phQuWw8d40AT";  
+const ELEVENLABS_API_KEY = "YOUR_NEW_SECURE_KEY";
+const ELEVENLABS_VOICE_ID = "RqsQjwl6phQuWw8d40AT";
 
 app.post("/tts", async (req, res) => {
     try {
         const { text } = req.body;
 
         const response = await axios.post(
-            `https://api.elevenlabs.io/v1/text-to-speech/${ELEVENLABS_VOICE_ID}`, 
+            `https://api.elevenlabs.io/v1/text-to-speech/${ELEVENLABS_VOICE_ID}`,
             {
                 text: text,
                 model_id: "eleven_monolingual_v1",
@@ -25,7 +25,7 @@ app.post("/tts", async (req, res) => {
                     "xi-api-key": ELEVENLABS_API_KEY,
                     "Content-Type": "application/json"
                 },
-                responseType: "arraybuffer"  // Ensures we get audio data
+                responseType: "arraybuffer"
             }
         );
 
@@ -37,4 +37,6 @@ app.post("/tts", async (req, res) => {
     }
 });
 
-app.listen(10000, () => console.log("✅ Proxy running on port 10000"));
+// 🔹 Fix: Use process.env.PORT so Render detects it correctly
+const PORT = process.env.PORT || 10000;
+app.listen(PORT, () => console.log(`✅ Proxy running on port ${PORT}`));
