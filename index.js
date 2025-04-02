@@ -1,27 +1,21 @@
-import express from "express";
-import cors from "cors";
-import fetch from "node-fetch";
+import express from 'express';
+import cors from 'cors';
+import fetch from 'node-fetch';
 
 const app = express();
-const PORT = 3000;
-
-app.use(cors());
 app.use(express.json());
+app.use(cors());
 
-const ELEVENLABS_API_KEY = "YOUR_ELEVENLABS_API_KEY"; // Replace with your actual API key
+const ELEVENLABS_API_KEY = 'your-elevenlabs-api-key-here';
 
-app.post("/tts", async (req, res) => {
+app.post('/tts', async (req, res) => {
     try {
-        const { text, voice_id } = req.body;
-        if (!text || !voice_id) {
-            return res.status(400).json({ error: "Missing text or voice_id" });
-        }
-
-        const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voice_id}`, {
-            method: "POST",
+        const { text } = req.body;
+        const response = await fetch('https://api.elevenlabs.io/v1/text-to-speech/YOUR_VOICE_ID', {
+            method: 'POST',
             headers: {
-                "xi-api-key": ELEVENLABS_API_KEY,
-                "Content-Type": "application/json"
+                'xi-api-key': ELEVENLABS_API_KEY,
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 text: text,
@@ -31,17 +25,15 @@ app.post("/tts", async (req, res) => {
         });
 
         if (!response.ok) {
-            const errorText = await response.text();
-            return res.status(response.status).json({ error: errorText });
+            throw new Error(`HTTP Error: ${response.status}`);
         }
 
-        const result = await response.json();
-        res.json(result);
+        const data = await response.json();
+        res.json(data);
     } catch (error) {
-        res.status(500).json({ error: "Internal Server Error", details: error.message });
+        res.status(500).json({ error: error.message });
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`✅ Proxy running on port ${PORT}`);
-});
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`✅ Proxy running on port ${PORT}`));
