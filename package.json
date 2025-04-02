@@ -1,5 +1,5 @@
 {
-  "name": "your-project-name",
+  "name": "roblox-tts-proxy",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
@@ -11,6 +11,5 @@
     "node-fetch": "^3.3.1",
     "dotenv": "^16.0.3",
     "cors": "^2.8.5"
-  },
-  "license": "MIT"
+  }
 }
